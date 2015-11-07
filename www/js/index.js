@@ -21,6 +21,7 @@
    initialize:function(){
      this.db=window.openDatabase("localDB","1.0","Base de datos CRM",2*1024*1024);
      this.accederDB();
+     alert("hola");
    },
    accederDB:function(){
      console.log("cargar la base de datos");
