@@ -21,7 +21,7 @@
    initialize:function(){
      this.db=window.openDatabase("localDB","1.0","Base de datos CRM",2*1024*1024);
      this.accederDB();
-     alert("hola");
+     //alert("hola");
    },
    accederDB:function(){
      console.log("cargar la base de datos");
@@ -37,17 +37,55 @@
        //resultado OK
        function(tx,result){
          console.log("consulta DB exitosa");
-       },
+         //existe más de una fila
+         if(result.rows.length>0){
+           console.log("2 consulta DB exitosa");
+           for(var i=0;i<result.rows.length;i++){
+             var fila=result.rows.item(i);
+             console.log("row "+i+" nombre: "+fila.nombre);
+             $("#principal ul").append("<li empleado-id='"+fila.id+"'>Error oculto</span><a href='#item'><img class='imgdatoslista' src='./img/user-64.png' /><div><h2>"+fila.nombre+"</h2><p>"+fila.cargo+"</p></div></a></li>").listview("refresh");
+           }
+         console.log("3 consulta DB exitosa");
+       }
+       $("#principal li a").click(consultaempleado);
+     },
        //error consulta
        function(tx,err){
-         console.log("se ha producido un error en la creacion de la base de datos: "+err.code);
+         console.log("se ha producido un error en la consulta de la base de datos: "+err.code);
          console.log("mensaje de error "+err.message);
        }
      );
    },
    mostrarDBError:function(err){
-     console.log("se ha producido un error en la creacion de la base de datos: "+err.code);
+     console.log("se ha producido un error en la consulta de la base de datos: "+err.code);
      console.log("mensaje de error "+err.message);
+   },
+   consultaempleado:function(){
+    var idempleado=  $(this).getParent().attr("empleado-id");
+    cargarDB.consultaId(idempleado);
+   },
+   consultaId:function(){
+
+     this.db.transaction(this.consultaok,this.consultaerr);
+   },
+   consultaok:function(tx){
+     var sqlpersona="SELECT * FROM empleados WHERE id='"+cargarDB.idempleado+"';";
+     tx.executeSql(sqlpersona,[],
+       //consulta ok
+       function(tx,result){
+         if(result.rows.length>0){
+           var empleadofila=result.rows.item(0);
+           $("#fichanombre").text(this).val(empleadofila.nombre);
+         }
+       },
+       //consulta error
+       function(){
+        alert("error al cargar ficha empleado");
+       }
+     );
+   },
+   consultaerr:function(){
+      alert("error al cargar ficha empleado");
    }
 /*
 segun paco definirlo fuera no funciona
@@ -63,7 +101,7 @@ var confirmDB={
   existe_db:"",
   initialize:function(){
     //variable bd
-    existe_db=window.localStorage.getItem("bd_creada");
+    existe_db=window.localStorage.getItem("existe_db");
     //openDatabase(nombre de la base de datos,version,descriptivo,tamaño estimado)
     this.db=window.openDatabase("localDB","1.0","Base de datos CRM",2*1024*1024);
 
@@ -151,13 +189,14 @@ var app = {
         //script mios
         confirmDB.initialize();
 
-
+        /*
         navigator.notification.alert(
           'Dispositivo arrancado',  // message
           this.alertDismissed,         // callback
           'arranque',            // title
           'Done'                // buttonName
         );
+        */
     },
     alertDismissed:function() {
       // do something

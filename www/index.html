@@ -50,7 +50,7 @@
             <div data-role="header">
                 <h1>Welcome CRM</h1>
             </div>
-              <ul data-role="listview" data-autodividers="true">
+              <ul id="listaempleados" data-role="listview" data-autodividers="true">
                 <li>
                   <a href="#editnew">
                     <div class=".divnew">
@@ -58,29 +58,10 @@
                     </div>
                   </a>
                 </li>
-                  <li><a href="#item1">
-                    <img class="imgdatoslista" src="./img/user-64.png" />
-                    <div>
-                      <h2>Copacio Mendez</h2>
-                      <p>Programador Web</p>
-                    </div>
-                    </a></li>
-                  <li><a href="#">
-                    <img class="imgdatoslista" src="./img/user-64.png" />
-                  <div>
-                    <h2>Copacio Mendez</h2>
-                    <p>Programador Web</p>
-                  </div></a></li>
-                  <li><a href="#">
-                    <img class="imgdatoslista" src="./img/user-64.png" />
-                  <div>
-                    <h2>Copacio Mendez</h2>
-                    <p>Programador Web</p>
-                  </div></a></li>
                 </ul>
        </div>
 <!--pages-->
-       <div data-role="page" id="item1" class="item">
+       <div data-role="page" id="item" class="item">
          <div data-role="header">
              <h1>Welcome CRM</h1>
          </div>
@@ -96,24 +77,24 @@
 
             <img class="imgdatosficha" src="./img/user-64.png"/>
             <div class="datos">
-              <h3>Copacio Mendez</h3>
-              <h4>Programador Web</h4>
-              <h5>38 años</h5>
-              <h5>Valencia</h5>
+              <h3 id="fichanombre">Copacio Mendez</h3>
+              <h4 id="fichacargo">Programador Web</h4>
+              <h5 id="fichaedad">38 años</h5>
+              <h5 id="fichalocalidad">Valencia</h5>
             </div>
             <hr style="margin-left: -5%;" width=110%  align="center">
             <div>
               <img src="./img/contacts32.png" class="telContactos"/>
               <div class="tel">
-                  <p>96 123 45 67</p>
-                  <p>666 666 666</p>
+                  <p id="fichatel1">96 123 45 67</p>
+                  <p id="fichatel2">666 666 666</p>
               </div>
             </div>
             <hr style="margin-left: -5%;" width=110% align="center">
             <div>
               <img class="imgmail" src="./img/mail.png"/>
               <div class="mail">
-                  <p>mail@mailmail.com</p>
+                  <p id="fichacorreo">mail@mailmail.com</p>
               </div>
             </div>
             <form action="#principal">
