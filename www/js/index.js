@@ -16,6 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+ var identificador=new Object();
  var cargarDB={
    db:"",
    initialize:function(){
@@ -29,7 +30,7 @@
      this.db.transaction(this.mostrarDB,this.mostrarDBError);
    },
    mostrarDB:function(tx){
-     var sql="SELECT * FROM empleados;";
+     var sql="SELECT * FROM empleados ORDER BY nombre ASC;";
      console.log("lanzamos la consola");
      tx.executeSql(
        sql,
@@ -39,43 +40,78 @@
          console.log("consulta DB exitosa");
          //existe más de una fila
          if(result.rows.length>0){
-           console.log("2 consulta DB exitosa");
+           console.log("2 consulta DB exitosa. "+result.rows.length);
            for(var i=0;i<result.rows.length;i++){
              var fila=result.rows.item(i);
              console.log("row "+i+" nombre: "+fila.nombre);
-             $("#principal ul").append("<li empleado-id='"+fila.id+"'>Error oculto</span><a href='#item'><img class='imgdatoslista' src='./img/user-64.png' /><div><h2>"+fila.nombre+"</h2><p>"+fila.cargo+"</p></div></a></li>").listview("refresh");
+             if(fila.img==null){
+               alert("sin imagen");
+             }
+             $("#principal ul").append("<li empleado-dni='"+fila.dni+"'><a href='#item'><img class='imgdatoslista' src="+fila.img+" /><div><h2>"+fila.nombre+"</h2><p>"+fila.cargo+"</p></div></a></li>").listview("refresh");
            }
          console.log("3 consulta DB exitosa");
        }
-       $("#principal li a").click(consultaempleado);
+       $("#principal li a").click(cargarDB.consultaempleado);
      },
        //error consulta
        function(tx,err){
-         console.log("se ha producido un error en la consulta de la base de datos: "+err.code);
+         console.log("se ha producido un error(1) en la consulta de la base de datos: "+err.code);
          console.log("mensaje de error "+err.message);
        }
      );
    },
    mostrarDBError:function(err){
-     console.log("se ha producido un error en la consulta de la base de datos: "+err.code);
+     console.log("se ha producido un error(2) en la consulta de la base de datos: "+err.code);
      console.log("mensaje de error "+err.message);
    },
    consultaempleado:function(){
-    var idempleado=  $(this).getParent().attr("empleado-id");
-    cargarDB.consultaId(idempleado);
+     console.log("funcion consultaempleado");
+    identificador.dni=  $(this).parent().attr("empleado-dni");
+    console.log("empleado id. "+identificador.dni);
+    cargarDB.consultaId();
    },
    consultaId:function(){
-
+     console.log("funcion consultadni:"+identificador.dni);
      this.db.transaction(this.consultaok,this.consultaerr);
    },
    consultaok:function(tx){
-     var sqlpersona="SELECT * FROM empleados WHERE id='"+cargarDB.idempleado+"';";
+     $("#fichaimg").attr("src", "./img/use128.png");
+     $("#fichanombre").text("cargando datos");
+     $("#fichadni").text("");
+     $("#fichacargo").text("");
+     $("#fichaedad").text("");
+     $("#fichadireccion").text("");
+     $("#fichalocalidad").text("");
+     $("#fichatel1").text("");
+     $("#fichatel2").text("");
+     $("#fichacorreo").text("");
+     console.log("ficha. "+identificador.dni);
+     console.log("funcion consulta ok");
+     var sqlpersona="SELECT * FROM empleados WHERE dni='"+identificador.dni+"';";
+     console.log(""+sqlpersona);
      tx.executeSql(sqlpersona,[],
        //consulta ok
        function(tx,result){
          if(result.rows.length>0){
+           console.log(result.rows.length+"");
            var empleadofila=result.rows.item(0);
-           $("#fichanombre").text(this).val(empleadofila.nombre);
+           console.log("ficha. "+empleadofila.nombre);
+           $("#fichaimg").attr("src",empleadofila.img);
+           $("#fichadni").text(empleadofila.dni);
+           $("#fichanombre").text(empleadofila.nombre+" "+empleadofila.apellidos);
+           $("#fichacargo").text(empleadofila.cargo);
+           $("#fichaedad").text(empleadofila.edad+" años");
+           $("#fichadireccion").text(empleadofila.direccion);
+           $("#fichalocalidad").text(empleadofila.localidad);
+           $("#fichatel1").text(empleadofila.telefono1);
+           //comprueba que exista un segundo telefono
+           if(empleadofila.tel2==null){
+             $("#fichatel2").text("");
+           }else{
+             $("#fichatel2").text(empleadofila.telefono2);
+           }
+           $("#fichacorreo").text(empleadofila.correoelectronico);
+           console.log("ficha modificada. "+empleadofila.nombre);
          }
        },
        //consulta error
@@ -134,17 +170,7 @@ var confirmDB={
   createLocalDB:function(tx){
     console.log("tarariro");
     tx.executeSql("DROP TABLE IF EXISTS empleados");
-    var sql="CREATE TABLE IF NOT EXISTS empleados (id INTEGER PRIMARY KEY AUTOINCREMENT,nombre VARCHAR(100), apellidos VARCHAR(256), cargo VARCHAR(128), direccion VARCHAR(500), localidad VARCHAR(128), telefono1 VARCHAR(50), telefono2 VARCHAR(50), correoelectronico VARCHAR(200));";
-    tx.executeSql(sql);
-    //insercion automatica de datos de prueba
-    sql="INSERT INTO empleados(nombre,apellidos,cargo,direccion,localidad,telefono1,telefono2,correoelectronico) VALUES('pablo','magaña','programador','mi direccion','mislata','5555555555','66666666','sdfghjk@hjk.com');";
-    console.log("SQL :"+sql);
-    tx.executeSql(sql);
-    sql="INSERT INTO empleados(nombre,apellidos,cargo,direccion,localidad,telefono1,telefono2,correoelectronico) VALUES('pablo','magaña','programador','mi direccion','mislata','5555555555','66666666','sdfghjk@hjk.com');";
-    tx.executeSql(sql);
-    sql="INSERT INTO empleados(nombre,apellidos,cargo,direccion,localidad,telefono1,telefono2,correoelectronico) VALUES('pablo','magaña','programador','mi direccion','mislata','5555555555','66666666','sdfghjk@hjk.com');";
-    tx.executeSql(sql);
-    sql="INSERT INTO empleados(nombre,apellidos,cargo,direccion,localidad,telefono1,telefono2,correoelectronico) VALUES('pablo','magaña','programador','mi direccion','mislata','5555555555','66666666','sdfghjk@hjk.com');";
+    var sql="CREATE TABLE IF NOT EXISTS empleados (dni VARCHAR(10) PRIMARY KEY, nombre VARCHAR(100), apellidos VARCHAR(256),edad VARCHAR(10), cargo VARCHAR(128), direccion VARCHAR(500), localidad VARCHAR(128), telefono1 VARCHAR(50), telefono2 VARCHAR(50), correoelectronico VARCHAR(200),img VARCHAR(300));";
     tx.executeSql(sql);
 
   },
@@ -174,6 +200,7 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
+        console.log(navigator.camera);
         app.receivedEvent('deviceready');
     },
     // Update DOM on a Received Event

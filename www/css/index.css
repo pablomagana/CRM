@@ -138,7 +138,7 @@ h1 {
     font-size: 12pt!important;
 }
 .imgdatoslista{
-    border-radius: 50%!important; 
+    border-radius: 50%!important;
 }
 .imgdatosficha{
     width: 111px;
@@ -170,24 +170,31 @@ h1 {
     top:70px;
     right: 5px;
     width: 40px!important;
-    /*border: 1px solid #000000 !important;*/
     box-shadow: 1px 1px 10px;
     border-radius: 5px;
-    background: #D6CBC5;
+    background: #FFFFFF;
     padding: 5px!important;
 }
-.img-list{
-    border-radius:50%;
-    background:#D6CBC5 ;
+.imgdelete{
+  position: fixed;
+  top:130px;
+  right: 5px;
+  width: 40px!important;
+  box-shadow: 1px 1px 10px;
+  border-radius: 5px;
+  background: #FFFFFF;
+  padding: 5px!important;
 }
+
 .list-a{
     border: none!important;
     background: none!important;
-    border-radius: none!;
+    border-radius: none!important;
     box-shadow: none!important;
     position: absolute!important;
-    top:-9px;
+    top:5px!important;
 }
+
 
 #imgname{
     width: 50px;

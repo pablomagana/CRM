@@ -10,6 +10,10 @@
 
     http://www.apache.org/licenses/LICENSE-2.0
 
+
+                PABLO MAGAÑA
+
+
     Unless required by applicable law or agreed to in writing,
     software distributed under the License is distributed on an
     "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -48,13 +52,14 @@
     <body>
        <div data-role="page" id="principal">
             <div data-role="header">
+              <a class="list-a" href="" data-icon="home" ></a>
                 <h1>Welcome CRM</h1>
             </div>
               <ul id="listaempleados" data-role="listview" data-autodividers="true">
                 <li>
                   <a href="#editnew">
                     <div class=".divnew">
-                      <h2 class="h2new"><img class="imgnew" src="./img/pluss64.png"/>Crear nueva ficha</h2>
+                      <h2 class="h2new"><img class="imgnew" src="./img/pluss64.png"/>Añadir ficha</h2>
                     </div>
                   </a>
                 </li>
@@ -63,9 +68,11 @@
 <!--pages-->
        <div data-role="page" id="item" class="item">
          <div data-role="header">
+           <a class="list-a" href="#principal" data-icon="home" ></a>
              <h1>Welcome CRM</h1>
          </div>
-         <a href="#editnew" class="edit"><img class="imgedit" src="./img/edit.png"/></a>
+         <a id="edicionenlace" href="#editnew" class="edit" ><img class="imgedit" src="./img/edit.png"/></a>
+         <a id="eliminarRegistro" href="#principal" class="edit" ><img id="eliminarRegistro" class="imgdelete" src="./img/delete24.png"/></a>
          <!--<form action="#editnew" class="edit">
            <input type="hidden" name="idtarget" value="1"/>
            <button class="imgedit" type="submit" name="imgedit" value="editar">
@@ -75,64 +82,62 @@
          <div class="contenido">
           <h1>Ficha Personal</h1>
 
-            <img class="imgdatosficha" src="./img/user-64.png"/>
+            <img id="fichaimg" class="imgdatosficha" src="./img/user-64.png"/>
             <div class="datos">
-              <h3 id="fichanombre">Copacio Mendez</h3>
-              <h4 id="fichacargo">Programador Web</h4>
-              <h5 id="fichaedad">38 años</h5>
-              <h5 id="fichalocalidad">Valencia</h5>
+              <h3 id="fichanombre"></h3>
+              <h4 id="fichadni"></h4>
+              <h4 id="fichacargo"></h4>
+              <h5 id="fichaedad"></h5>
+              <h5 id="fichalocalidad"></h5>
+              <h5 id="fichadireccion"></h5>
             </div>
             <hr style="margin-left: -5%;" width=110%  align="center">
             <div>
               <img src="./img/contacts32.png" class="telContactos"/>
               <div class="tel">
-                  <p id="fichatel1">96 123 45 67</p>
-                  <p id="fichatel2">666 666 666</p>
+                  <p id="fichatel1"></p>
+                  <p id="fichatel2"></p>
               </div>
             </div>
             <hr style="margin-left: -5%;" width=110% align="center">
             <div>
               <img class="imgmail" src="./img/mail.png"/>
               <div class="mail">
-                  <p id="fichacorreo">mail@mailmail.com</p>
+                  <p id="fichacorreo"></p>
               </div>
             </div>
-            <form action="#principal">
-              <div class="back">
-                <input  type="submit" value="GO BACK">
-                </input>
-              </div>
-          </form>
          </div>
        </div>
        <!--page edit / new target-->
        <div data-role="page" id="editnew" class="editnew">
          <div data-role="header">
-           <a class="list-a" href="#principal">
-           <img class="img-list" src="./img/list-32.png"/>
-         </a>
+           <a class="list-a" href="#principal" data-icon="home" ></a>
            <h1>Welcome CRM - Formulario de registro</h1>
          </div>
         <div role="main" class="ui-content">
           <p class="advertencia">* Campos requeridos</p>
-              <form method="post" action="#">
-                  <img src="./img/foto32.png" id="imgname" width="32px" height="32px"/>
-                  <input type="file" name="imgfile" id="imgfile">
-
+              <form method="post">
+                <img src="./img/foto32.png" id="imgfile" width="50px" height="50px"/>
+                <input type="hidden" name="tipo" id="inputtipo" value="nuevo">
+                <input type="text" name="inputdni" id="inputdni" placeholder="DNI *" required>
                 <input type="text" name="inputname" id="inputname" placeholder="Nombre *" required>
                 <input type="text" name="inputsurname" id="inputsurname" placeholder="Apellidos *" required>
+                <input type="text" name="inputage" id="inputage" placeholder="edad *" required>
                 <input type="text" name="inputjob" id="inputjob" placeholder="Cargo *" required>
                 <input type="text" name="inputaddress" id="inputaddress" placeholder="Dirección *"required>
                 <input type="text" name="inputlocality" id="inputlocality" placeholder="Localidad *" required>
                 <input type="text" name="inputphone1" id="inputphone1" placeholder="telefono 1 *" required>
                 <input type="text" name="inputphone2" id="inputphone2" placeholder="telefono 2 " >
                 <input type="text" name="inputmail" id="inputmail" placeholder="Correo electronico *" required>
-                <input type="submit" id="submit" value="Registrar"/>
+                <input type="Button" class="ui-btn" id="nuevaficha" value="Registrar"/>
        </div>
        <script type="text/javascript" src="./jquery/jquery-1.11.3.min.js"></script>
        <script type="text/javascript" src="./jquery/jquery.mobile-1.4.5.min.js"></script>
 
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/edicion.js"></script>
+        <script type="text/javascript" src="js/registro.js"></script>
+        <script type="text/javascript" src="js/camara.js"></script>
     </body>
 </html>

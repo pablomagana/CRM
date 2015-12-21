@@ -1,3 +1,9 @@
+Node version: v4.2.2
+
+Cordova version: 5.4.1
+
+Config.xml file: 
+
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="io.cordova.hellocordova" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>CRM Gestion</name>
@@ -28,3 +34,13 @@
         <allow-intent href="itms-apps:*" />
     </platform>
 </widget>
+
+
+Plugins: 
+
+cordova-plugin-camera,cordova-plugin-device,cordova-plugin-dialogs,cordova-plugin-whitelist
+
+Error retrieving Android platform information: Error: cmd: Command failed with exit code 1 Error output:
+"android" no se reconoce como un comando interno o externo,
+programa o archivo por lotes ejecutable.
+
